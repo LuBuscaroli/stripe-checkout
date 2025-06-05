@@ -4,14 +4,14 @@ const app = express();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const cors = require('cors');
 
-const corsOptions = {
-  origin: [
-    'https://www.casaoriginalemilano.com',
-    'https://casaoriginalemilano.com'
-  ],
+const cors = require('cors');
+
+app.use(cors({
+  origin: ['https://www.casaoriginalemilano.com', 'https://casaoriginalemilano.com'],
   methods: ['POST'],
-  credentials: true,
-};
+  allowedHeaders: ['Content-Type'],
+  credentials: true
+}));
 
 app.use(cors(corsOptions));
 
