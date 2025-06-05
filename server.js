@@ -2,6 +2,12 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const cors = require('cors');
+
+app.use(cors({
+  origin: 'https://www.casaoriginalemilano.com',
+  methods: ['POST'],
+}));
 
 app.use(express.static('public'));
 app.use(express.json());
