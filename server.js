@@ -4,14 +4,18 @@ const app = express();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const cors = require('cors');
 
+// ✅ Configuração correta do CORS
 app.use(cors({
-  origin: ['https://www.casaoriginalemilano.com', 'https://casaoriginalemilano.com'],
+  origin: [
+    'https://www.casaoriginalemilano.com',
+    'https://casaoriginalemilano.com'
+  ],
   methods: ['POST'],
   allowedHeaders: ['Content-Type'],
   credentials: true
 }));
 
-
+// Middleware padrão
 app.use(express.static('public'));
 app.use(express.json());
 
