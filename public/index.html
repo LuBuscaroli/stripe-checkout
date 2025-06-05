@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout com Múltiplos Order Bumps</title>
+</head>
+<body>
+  <h1>Feed Øriginale 97€</h1>
+
+  <form id="checkout-form">
+    <h3>Aggiungi i complementi:</h3>
+    <label><input type="checkbox" name="orderBump" value="bump1" /> Ottieni un’analisi personalizzata del tuo profilo (offerta speciale) <del>500€</del> +397€</label><br>
+    <label><input type="checkbox" name="orderBump" value="bump2" /> Cartella aggiornata con referenze di contenuti virali +17€</label><br>
+    <label><input type="checkbox" name="orderBump" value="bump3" /> 50+ profili virali da seguire per non restare mai senza ispirazione 7€</label><br>
+    <label><input type="checkbox" name="orderBump" value="bump4" /> Brand di prodotti fisici Øriginali da cui trarre ispirazione 7€</label><br><br>
+
+    <button type="submit">Concludere l'acquisto</button>
+  </form>
+
+  <script>
+    document.getElementById("checkout-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      // Captura todos os checkboxes marcados
+      const selectedBumps = Array.from(document.querySelectorAll('input[name="orderBump"]:checked'))
+                                .map(cb => cb.value);
+
+      const response = await fetch("/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ orderBumps: selectedBumps }) // envia array como ["bump2", "bump3"]
+      });
+
+      const data = await response.json();
+      window.location.href = data.url;
+    });
+  </script>
+</body>
+</html>
